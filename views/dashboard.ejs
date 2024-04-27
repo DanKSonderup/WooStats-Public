@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <nav>
+        <a href="/hverdagskram/dashboard"><button>Hjem</button></a>
+        <a href="/hverdagskram/statistik"><button>Statistik</button></a>
+        <a href="/hverdagskram/profit-margin"><button>Profit-Margin</button></a>
+    </nav>
+    <br>
+    <h1>Velkommen til dit Dashboard</h1>
+    <br> <br> <br>
+    <div style="background-color: #324960; max-width: 500px; margin: auto; text-align: center; padding: 10px;">
+        <h3>Dit bedstperformende produkt denne måned</h3>
+        <img src="<%= data.image %>" width="150px" height="150px">
+        <h4>
+            <%= data.name %>
+        </h4>
+        <p>Genereret profit: <%= data.statistics[0].oneMonth[2].toFixed(0) %> DKK
+        </p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript " src="js/profit-margin.js" defer></script>
+    <link rel="stylesheet" href="css/profit-margin.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav>
+        <a href="/hverdagskram/dashboard"><button>Hjem</button></a>
+        <a href="/hverdagskram/statistik"><button>Statistik</button></a>
+        <a href="/hverdagskram/profit-margin"><button>Profit-Margin</button></a>
+        <a href="/hverdagskram/profit-margin-update"><button>Genindlæs produkt data</button></a>
+    </nav>
+    <br>
+    <h1>Profit Margin</h1>
+    <br>
+    <p style="text-align: center; color: white;">Marker de produkter du ønsker at ændre profit margin på. Du kan benytte
+        alle knappen
+        til at markere alle. Bemærk,
+        kun produkter med en profit-margin over 0% rettes.</p>
+    <br>
+    <div style="align-items: center; text-align: center;">
+        <form id="profitmarginform" action="/hverdagskram/edit-profit-margin" method="POST">
+            <input type="text" placeholder="Indtast ny profitmargin" name="profitmargin">
+            <input type="submit" value="Ret profit-margin" class="btn">
+        </form>
+    </div>
+    <img id="progressBar">
+    <br>
+    <br>
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th>Billede</th>
+                    <th onclick="sortTable(1, 1)">Id</th>
+                    <th onclick="sortTable(2, 0)">Produkt navn</th>
+                    <th onclick="sortTable(3, 1)">På Lager</th>
+                    <th onclick="sortTable(4, 1)">Salgspris</th>
+                    <th onclick="sortTable(5, 1)">Omkostninger</th>
+                    <th onclick="sortTable(6, 1)">Profit-Margin</th>
+                    <th>Marker <button id="cbSelcAll" onclick="markAllCB()">alle</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(product=> { %>
+                    <tr>
+                        <td>
+                            <img width="60px" height="60px" src="<%= product.image%>">
+                        </td>
+                        <td>
+                            <%= product.id%>
+                        </td>
+                        <td>
+                            <%= product.name%>
+                        </td>
+                        <td>
+                            <%= product.stock_quantity%>
+                        </td>
+                        <td>
+                            <%= product.price%>
+                        </td>
+                        <td>
+                            <%= product.cost_of_goods%>
+                        </td>
+                        <td>
+                            <%= product.cost_of_goods==0 ? 0 : ((product.price / product.cost_of_goods) *
+                                100).toFixed(2) %> %
+                        </td>
+                        <td>
+                            <input type="checkbox" id="cb-<%= product.id%>" name="<%= product.id%>"
+                                value="<%= product.id%>"><br>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

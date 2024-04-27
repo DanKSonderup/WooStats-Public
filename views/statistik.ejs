@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript " src="js/statistik.js" defer></script>
+    <link rel="stylesheet" href="css/statistik.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav>
+        <a href="/hverdagskram/dashboard"><button>Hjem</button></a>
+        <a href="/hverdagskram/statistik"><button>Statistik</button></a>
+        <a href="/hverdagskram/profit-margin"><button>Profit-Margin</button></a>
+    </nav>
+    <br>
+    <h1>Velkommen til dit statistik</h1>
+    <br> <br> <br>
+    <div id="input-form-statistic" style="text-align: center;">
+        <form id="statisticform" action="" method="GET">
+            <label for="dataperiod">Vælg periode:</label>
+            <select id="dataperiod" name="dataperiod">
+                <option value="1w">1 uge</option>
+                <option value="2w">2 uger</option>
+                <option value="1m">1 måned</option>
+                <option value="3m">3 måneder</option>
+                <option value="6m">6 måneder</option>
+            </select>
+            <input id="selectPeriod" type="submit" value="Vis statistik" class="btn">
+        </form>
+        <br>
+        <br>
+    </div>
+    <div class="table-wrapper">
+        <table class="fl-table">
+            <thead>
+                <tr>
+                    <th>Billede</th>
+                    <th onclick="sortTable(1, 0)">Produkt navn</th>
+                    <th onclick="sortTable(2, 1)">På Lager</th>
+                    <th onclick="sortTable(3, 1)">Salg <%= period %> dage</th>
+                    <th onclick="sortTable(4, 1)">Gns Salg <%= period %> dage</th>
+                    <th onclick="sortTable(5, 1)">Salgsforskel</th>
+                    <th onclick="sortTable(6, 1)">Dage til lager er tomt</th>
+                    <th onclick="sortTable(7, 1)">Omsætning for periode</th>
+                    <th onclick="sortTable(8, 1)">Overskud for periode</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(product=> {
+                    /*
+                    let statisticsData = null;
+                    let daysTillStockDry = null;
+                    if(product.statistics.length> 0) {
+                    statisticsData = product.statistics[0].oneWeek;
+                    daysTillStockDry = product.statistics[0].daysTillStockDry;
+                    } */
+                    %>
+                    <tr>
+                        <td>
+                            <img width="60px" height="60px" src="<%= product.image%>">
+                        </td>
+                        <td>
+                            <%= product.name.trim() %>
+                        </td>
+                        <td>
+                            <%= product.stock_quantity %>
+                        </td>
+                        <td>
+                            <%= product.statisticsData[0] %>
+                        </td>
+                        <td>
+                            <%= product.statisticsData[3] %>
+                        </td>
+                        <% if (product.salesDifference> 0) { %>
+                            <td style="color: green">
+                                <% } else { %>
+                            <td style="color: red">
+                                <% } %>
+                                    <%= product.salesDifference %> %
+                            </td>
+                            <td>
+                                <% if(product.daysTillStockDry>= 0){ %>
+                                    <%= product.daysTillStockDry %>
+                                        <% } else{ %>
+                                            0
+                                            <% } %>
+                            </td>
+                            <td>
+                                <%= product.statisticsData[1].toFixed(0) %>
+                            </td>
+                            <td>
+                                <%= product.statisticsData[2].toFixed(0) %>
+                            </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
